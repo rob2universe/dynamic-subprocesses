@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_0b0qh1f" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.9.0">
+  <decision id="decideOnProcessIDs" name="Decide on Process IDs">
+    <decisionTable id="DecisionTable_10kv52s" hitPolicy="COLLECT">
+      <input id="Input_1" label="startParameterList" biodi:width="252">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>startParameterList</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="processList" name="processList" typeRef="string" />
+      <rule id="DecisionRule_0b0j188">
+        <inputEntry id="UnaryTests_19dpzdn">
+          <text>contains(startParameterList, "A")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14ea4sg">
+          <text>"Alpha"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_121ds0o">
+        <inputEntry id="UnaryTests_1rgli0i">
+          <text>contains(startParameterList, "B")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pipl3m">
+          <text>"Bravo"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1i4quho">
+        <inputEntry id="UnaryTests_00b8v0d">
+          <text>contains(startParameterList, "C")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ve0kjv">
+          <text>"Charlie"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="decideOnProcessIDs">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

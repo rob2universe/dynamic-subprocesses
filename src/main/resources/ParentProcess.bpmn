@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.9.0">
+  <bpmn:process id="ParentProcess" name="Parent" isExecutable="true">
+    <bpmn:startEvent id="StartStartEvent" name="Start">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="startParameterList" label="Start Parameters" type="string" defaultValue="&#34;A&#34;, &#34;B&#34;, &#34;C&#34;" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_1fp17al</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEndEvent" name="End">
+      <bpmn:incoming>Flow_0ggpat6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataObjectReference id="ProcessListDataObjectReference" name="process list" dataObjectRef="DataObject_0i7ibom" />
+    <bpmn:dataObject id="DataObject_0i7ibom" />
+    <bpmn:businessRuleTask id="DetermineProcessListTask" name="Determine process list" camunda:resultVariable="plist" camunda:decisionRef="decideOnProcessIDs">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="processList">
+            <camunda:script scriptFormat="feel">for r in plist return get value(r, "processList")</camunda:script>
+          </camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1fp17al</bpmn:incoming>
+      <bpmn:outgoing>Flow_1f6agx6</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_07e6zjv">
+        <bpmn:targetRef>ProcessListDataObjectReference</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartStartEvent" targetRef="DetermineProcessListTask" />
+    <bpmn:callActivity id="ExecuteAProcessFromTheListCallActivity" name="Execute a process from the list" calledElement="${targetProcess}">
+      <bpmn:extensionElements>
+        <camunda:in source="targetProcess" target="targetProcess" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1f6agx6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ggpat6</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="processList" camunda:elementVariable="targetProcess" />
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_1f6agx6" sourceRef="DetermineProcessListTask" targetRef="ExecuteAProcessFromTheListCallActivity" />
+    <bpmn:sequenceFlow id="Flow_0ggpat6" sourceRef="ExecuteAProcessFromTheListCallActivity" targetRef="EndEndEvent" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ParentProcess">
+      <bpmndi:BPMNEdge id="SequenceFlow_1fp17al_di" bpmnElement="SequenceFlow_1fp17al">
+        <di:waypoint x="215" y="127" />
+        <di:waypoint x="280" y="127" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f6agx6_di" bpmnElement="Flow_1f6agx6">
+        <di:waypoint x="380" y="127" />
+        <di:waypoint x="450" y="127" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ggpat6_di" bpmnElement="Flow_0ggpat6">
+        <di:waypoint x="550" y="124" />
+        <di:waypoint x="622" y="124" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartStartEvent">
+        <dc:Bounds x="179" y="109" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="185" y="152" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1bablnc_di" bpmnElement="ProcessListDataObjectReference">
+        <dc:Bounds x="382" y="225" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="372" y="282" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pksv58_di" bpmnElement="DetermineProcessListTask">
+        <dc:Bounds x="280" y="87" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_068kmt1_di" bpmnElement="ExecuteAProcessFromTheListCallActivity">
+        <dc:Bounds x="450" y="84" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="EndEndEvent">
+        <dc:Bounds x="622" y="106" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="630" y="149" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_07e6zjv_di" bpmnElement="DataOutputAssociation_07e6zjv">
+        <di:waypoint x="351" y="167" />
+        <di:waypoint x="382" y="225" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

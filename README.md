@@ -1,5 +1,9 @@
-# vanilla-camunda-template
+# dynamic subprocesses
 
-This is a template repository to create a plain vanilla CAMUNDA Platform EE Spring Boot project.
+This project demonstrates how to create subprocesses from a runtime-defined list or process ids.
+A decision table maps process data to the target process definition keys. The list of process 
+definition keys is the used as the collection in a multi-instance call activity.
 
-This is the best generic starting point!  - Change my mind :)
+
+
+
